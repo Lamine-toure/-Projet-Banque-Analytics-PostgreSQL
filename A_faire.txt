@@ -1,0 +1,123 @@
+Ex0 : Conception de la base de données
+
+0- Construire une base de données contenant les tables "CARTES", "CLIENTS", "MARCHANDS" et "TRANSACTIONS"
+1- Générer une clé primaire pour chacune des tables
+2- Générer un index sur 2 champs de chaque table (justifiez vos choix d'index)
+3- Partitionnez les tables "CARTES" et "TRANSACTIONS" respectivement par marques et par périodes
+
+Ex1 : Analyse Clients et Transactions
+
+1- Clients et nombre de cartes
+Affichez la liste de tous les clients avec leur id_client, nom complet et nationalité, salaire,
+et le nombre de cartes qu'ils possèdent.
+Triez par nombre de cartes décroissant.
+
+2- Montant total dépensé par client
+Pour chaque client, calculez le montant total de toutes ses transactions.
+Affichez id_client, salaire, et montant_total_transactions.
+Triez par montant total décroissant et limitez à 100 résultats.
+
+3- Clients à risque (dette élevée)
+Classez les clients par niveau de dette :
+	low ayant une dette entre 0% et 50% de leur salaire.
+	medium ayant une dette entre 50% et 100% de leur salaire.
+	high ayant une dette entre 100% et 200% de leur salaire.
+	ultra_high ayant une dette entre 200% et 500% de leur salaire.
+	UTP ayant une dette supérieure 500% de leur salaire.
+Affichez id_client, salaire, dette, le ratio dette/salaire et le niveau de dette.
+Triez par ratio décroissant.
+
+4- Transactions par secteur
+Listez tous les secteurs destinataires (champ MCC (voir fichier json)) avec le nombre de transactions
+et les montants moyen et total par transaction dans chaque secteur.
+Triez par nombre de transactions décroissant.
+
+5- Cartes les plus utilisées
+Pour chaque carte (id_carte), affichez le nombre de transactions effectuées et le montant total dépensé.
+Triez par nombre de transactions décroissant et limitez à 150 résultats.
+
+6- Clients par nationalité
+Groupez les clients par nationalité et affichez :
+nationalité, nombre de clients, salaire moyen, et dette moyenne.
+Triez par nombre de clients décroissant.
+
+7- Transactions par type et secteur
+Créez un résumé des transactions montrant :
+type_transaction (champ use_chip), secteur_destinataire, nombre de transactions, et montant total.
+Triez d'abord par type_transaction, puis par montant total décroissant.
+
+8- Clients sans transactions
+Trouvez tous les clients qui n'ont effectué aucune transaction. Affichez id_client, salaire, et credit_score.
+
+9- Villes les plus actives
+Listez les 5 villes destinataires (merchant_city) avec le plus grand nombre de transactions
+et le montant moyen par transaction. Affichez ville_destinataire, nombre_transactions, et montant_moyen.
+
+10- Analyse par genre
+Pour chaque genre, affichez :
+genre, nombre de clients, salaire moyen, credit_score moyen, et montant total des transactions.
+Triez par montant total décroissant.
+
+--------------------------------------------------------------------------------------------------------------------
+
+Ex2 : Analyses Avancées
+
+1- Évolution du comportement de dépense par client
+Pour chaque client, calculez le montant moyen des transactions du premier trimestre vs le dernier trimestre (basé sur la date de transaction).
+Affichez id_client, montant_moyen_qfirst, montant_moyen_qlast, et la variation en pourcentage.
+Limitez aux clients ayant au moins 5 transactions par trimestre.
+
+2- Détection d'anomalies de transactions
+Identifiez les transactions anormales :
+celles dont le montant dépasse de plus de 2 écarts-types la moyenne des transactions du client.
+Affichez id_transaction, id_client, montant, montant_moye\_client, écart_type, et z_score.
+Limitez à 200 résultats.
+
+3- Analyse RFM (Recency, Frequency, Monetary)
+Créez une analyse RFM pour chaque client :
+* Recency : nombre de jours depuis la dernière transaction
+* Frequency : nombre total de transactions
+* Monetary : montant total dépensé
+Segmentez chaque dimension en quartiles (1 à 4, où 4 est le meilleur).
+Affichez id_client, recency_score, frequency_score, monetary_score,
+et un score RFM global (moyenne des trois).
+Triez par score RFM décroissant.
+
+4- Clients VIP et leur contribution au chiffre d'affaires
+Identifiez les clients VIP (top 10% en montant total dépensé).
+Pour chaque client VIP, affichez id_client, montant_total, pourcentage_du_chiffre_total,
+et le cumul cumulatif des VIP (pour voir leur contribution progressive).
+Triez par montant décroissant.
+
+5- Corrélation entre credit_score et montant moyen des transactions
+Groupez les clients par tranche de credit_score (par 300 points : 400-700, 700-1000, etc.)
+et calculez pour chaque tranche : nombre de clients, montant moyen des transactions, montant médian, et écart-type.
+Affichez aussi le nombre de transactions total par tranche.
+
+6- Analyse des patterns de dépense par secteur et genre
+Pour chaque combinaison (genre, secteur_destinataire (champ MCC)), calculez :
+nombre de transactions, montant total, montant moyen, et le rang de ce secteur pour ce genre (1 = secteur préféré).
+Affichez uniquement les top 10 secteurs par genre.
+
+7- Clients avec comportement de dépense croissant
+Identifiez les clients dont le montant moyen des transactions augmente chaque mois (sur au moins 3 mois consécutifs).
+Affichez id_client, mois, montant_moyen_mois, et la tendance (croissante/stable/décroissante).
+
+8- Analyse de la diversité des cartes par client
+Pour chaque client, calculez : nombre de cartes différentes, nombre de marques différentes, nombre de types différents,
+et le ratio de diversité (nombre de marques / nombre de cartes).
+Affichez aussi le nombre de transactions par carte. Identifiez les clients à faible diversité (ratio inférieur à 0.5).
+
+9- Prédiction de churn : clients inactifs
+Identifiez les clients "à risque de churn" :
+ceux qui n'ont pas eu de transaction depuis plus de 90 jours (à la date max du dataset)
+ET dont le montant moyen mensuel a baissé de plus de 30% entre les 3 derniers mois actifs et les 3 mois avant.
+Affichez id_client, dernière_transaction, jours_inactivité, montant_moyen_récent, montant_moyen_ancien, et variation_pct.
+
+--------------------------------------------------------------------------------------------------------------------
+
+Ex3 : Industrialisation
+
+Pour les questions 3-4-8 de l'exercice 1 et 3-4 de l'exercice 2,
+concevoir des procédures PL/SQL permettant des déclencher des batchs (quotidiens et mensuels)
+qui alimenteront une table dédiée à chaque question dans un datamart d'analyse.

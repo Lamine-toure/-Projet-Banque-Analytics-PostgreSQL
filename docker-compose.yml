@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: banqueanalytics2
+    env_file: .env                        
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./data:/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin2
+    env_file: .env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata2:
