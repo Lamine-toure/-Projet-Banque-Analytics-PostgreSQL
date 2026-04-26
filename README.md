@@ -261,7 +261,6 @@ DB_PORT=5433
 - **PostgreSQL 16** — Base de données avec partitionnement natif
 - **Docker Compose** — Containerisation (PostgreSQL + pgAdmin)
 - **PL/pgSQL** — Procédures stockées et batchs
-- **Python + Faker** — Génération de données synthétiques réalistes
 
 ---
 
